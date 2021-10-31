@@ -1,18 +1,56 @@
+.derecha{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include tablet {
+        align-items: flex-end;
+    }
+
+    .dark-mode-boton{
+        width: 3rem;
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+
+        //ANIMACION DE INVERCION DE COLOR
+        filter: invert(100%);
+
+        &:hover{
+            cursor: pointer;
+        }
+
+        @include tablet {
+            margin-top: 0;
+        }
+    }
+}
+
 .barra{
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding-top: 3rem;
 
     @include tablet {
         flex-direction: row;
         justify-content: space-between;
+        align-items: flex-end;
     }
 }
 
 .navegacion{
+
+    //ANIMACION PARA DESAPARECER O MOSTRAR EL SUBMENU
+    visibility: hidden;//display: none
+    opacity: 0;
+    height: 0;
+    transition: visibility .3s ease-in-out, opacity 0.5s linear, height .5s linear;
+
     @include tablet{
         display: flex;
         align-items: center;//alinear VERTIFALMENTE
+        visibility: visible;
+        opacity: 1;
     }
     a{
         color: $blanco;
@@ -30,4 +68,22 @@
             }
         }
     }
+}
+
+//MENU DE HAMBURGUESA
+.mobile-menu{
+    @include tablet {
+        display: none;
+    }
+
+    img{
+        width: 5rem;
+    }
+}
+
+//Clase mostrar u ocultar el submenu
+.mostrar{
+    visibility: visible;//display: block
+    opacity: 1;
+    height: auto;
 }
