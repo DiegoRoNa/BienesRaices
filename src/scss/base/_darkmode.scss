@@ -35,4 +35,28 @@
             color: $blanco;
         }
     }
+
+    table.propiedades{
+    
+        thead{
+            background-color: $grisOscuro;
+
+            th{
+                color: $blanco;
+                padding: 2rem;
+            }
+        }
+
+        tbody{
+            background-color: $gris;
+            
+            td{
+                color: $grisOscuro;
+            }
+        }
+    
+        .imagen-tabla{
+            width: 10rem;
+        }
+    }
 }

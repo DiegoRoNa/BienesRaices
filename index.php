@@ -5,7 +5,6 @@ incluirTemplate('header', $inicio = true);
 
 ?>
 
-
     <main class="contenedor seccion">
         <h1>Más sobre nosotros</h1>
 
