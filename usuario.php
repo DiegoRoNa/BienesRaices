@@ -1,7 +1,7 @@
 <?php 
 
 //CONECTAR A LA BD
-require 'includes/config/database.php';
+require 'includes/app.php';
 $db = conectarDB();
 
 //Crear email y password

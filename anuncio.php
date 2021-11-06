@@ -9,7 +9,7 @@ if (!$id) {
 }
 
 //Conexión a la BD
-require 'includes/config/database.php';
+require 'includes/app.php';
 $db = conectarDB();
 
 //CONSULTAR TODOS LAS PROPIEDADES
@@ -23,7 +23,6 @@ if (!$resultado->num_rows) {
 
 $propiedad = mysqli_fetch_assoc($resultado);
 
-require 'includes/funciones.php';
 incluirTemplate('header');
 
 ?>

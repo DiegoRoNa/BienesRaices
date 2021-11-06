@@ -1,16 +1,13 @@
 <?php 
 
 //Funciones
-require '../../includes/funciones.php';
+require '../../includes/app.php';
 
-$auth = estaAutenticado();
+use App\Propiedad;
 
-if (!$auth) {
-    header('Location: /');
-}
+estaAutenticado();
 
 //Conexión a la BD
-require '../../includes/config/database.php';
 $db = conectarDB();
 
 //CONSULTAR TODOS LOS VENDEDORES
@@ -18,7 +15,7 @@ $consulta = "SELECT * FROM vendedores;";
 $resultado = mysqli_query($db, $consulta);
 
 //ARREGLO DE MENSAJES DE ERRORES
-$errores = [];
+$errores = Propiedad::getErrores();
 
 //Las declaramos aquí para poder mantener el input en caso de lanzar una alerta
 $titulo = '';
@@ -27,61 +24,21 @@ $descripcion = '';
 $habitaciones = '';
 $wc = '';
 $estacionamiento = '';
+$creado = '';
 $idVendedor = '';
 
 //DATOS DEL FORMULARIO
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    //RECIBIENDO DATOS DEL FORM Y SANITIZANDO
-    $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
-    $precio = mysqli_real_escape_string($db, $_POST['precio']);
-    $imagen = $_FILES['imagen'];
-    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
-    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
-    $wc = mysqli_real_escape_string($db, $_POST['wc']);
-    $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
-    $idVendedor = mysqli_real_escape_string($db, $_POST['vendedor']);
+    $propiedad = new Propiedad($_POST);
 
-
-    //VALIDAR LOS DATOS
-    if (!$titulo) {
-        $errores[] = 'Debes añadir un título a la propiedad';
-    }
-    if (!$precio) {
-        $errores[] = 'El precio es obligatorio';
-    }
-
-    //VALIDACIÓN DE LA IMAGEN
-    if (!$imagen['name']) {
-        $errores[] = 'La imagen es obligatoria';
-    }
-
-    //VALIDAR EL TAMAÑO DE LA IMAGEN(5MB)
-    $tamaño = 1000 * 5000;
-
-    if ($imagen['size'] > $tamaño) {
-        $errores[] = 'La imagen es demasiado pesada';
-    }
-
-    if (!$descripcion || strlen($descripcion) < 50) {
-        $errores[] = 'Es necesaria una descripción y debe tener mínimo 50 caracteres';
-    }
-    if (!$habitaciones) {
-        $errores[] = 'Coloca el número de habitaciones';
-    }
-    if (!$wc) {
-        $errores[] = 'Coloca el número de baños';
-    }
-    if (!$estacionamiento) {
-        $errores[] = 'Coloca el número de lugares del estacionamiento';
-    }
-    if (!$idVendedor) {
-        $errores[] = 'Elige un vendedor';
-    }
+    $errores = $propiedad->validar();
 
 
     //Insertar registros en la tabla PROPIEDADES validando que errores esté vacío
     if (empty($errores)) {
+
+        $propiedad->guardar();
 
         //SUBIDA DE ARCHIVOS
         //crear la carpeta de imagenes
@@ -96,10 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //subir la imagen a la memoria del servidor
         move_uploaded_file($imagen['tmp_name'], $carpetaImagenes.$nombreImagen);
 
-        //insertar
-        $query = "INSERT INTO propiedades (idVendedor, titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado)
-              VALUES($idVendedor, '$titulo', $precio, '$nombreImagen', '$descripcion', $habitaciones, $wc, $estacionamiento, CURRENT_DATE());";
-
+        
         $resultado = mysqli_query($db, $query);
 
         if ($resultado) {
@@ -161,7 +115,7 @@ incluirTemplate('header');
             <fieldset>
                 <legend>Vendedor</legend>
 
-                <select name="vendedor" id="vendedor">
+                <select name="idVendedor" id="idVendedor">
 
                     <option value="">-- Seleccione --</option>
 

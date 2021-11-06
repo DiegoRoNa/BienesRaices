@@ -1,7 +1,16 @@
 <?php 
+//ARCHIVO PRINCIPAL QUE MANDA LLAMAR FUNCIONES Y CLASES
 
-//ESTAMOS CARGANDO LAS RUTAS DE LOS TEMPLATES, EN UNA VARIABLE GLOBAL
+require 'funciones.php';//Funciones
+require 'config/database.php';//Conexion de la BD
+require __DIR__.'/../vendor/autoload.php';//Autoload de composer
 
 
-define('TEMPLATES_URL', __DIR__ . '\templates');
-//define('FUNCIONES_URL', __DIR__ - 'funciones.php');
+//CONECTAR A LA BD
+$db = conectarDB();
+
+use App\Propiedad;
+
+Propiedad::setDB($db);//todos los objetos creados de Propiedad tienen la referencia a la BD
+
+

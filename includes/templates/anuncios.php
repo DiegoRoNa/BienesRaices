@@ -1,7 +1,7 @@
 <?php
 
 //OBTENER LA CONEXION A LA BD
-require __DIR__.'/../config/database.php';
+//La conexion viene desde index.php que contiene el require app.php
 $db = conectarDB();
 
 //CONSULTA A LA BD

@@ -1,6 +1,6 @@
 <?php 
 
-require 'includes/funciones.php';
+require 'includes/app.php';//Cambio a app.php
 incluirTemplate('header', $inicio = true);
 
 ?>

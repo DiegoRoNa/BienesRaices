@@ -3,7 +3,7 @@
 //CONEXIÓN A LA BASE DE DATOS
 
 function conectarDB() : mysqli {
-    $db = mysqli_connect('localhost', 'root', '', 'bienes_raices');
+    $db = new mysqli('localhost', 'root', '', 'bienes_raices');
 
     if (!$db) {
         echo 'Error, no se pudo contectar';
