@@ -32,10 +32,7 @@ incluirTemplate('header', $inicio = true);
     <section class="contenedor seccion">
         <h2>Casas y departamentos en venta</h2>
 
-        <?php
-            $limit = 3;
-            include 'includes/templates/anuncios.php'; 
-        ?>
+        <?php include 'includes/templates/anuncios.php'; ?>
         
 
         <div class="alinear-derecha">

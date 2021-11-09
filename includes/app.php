@@ -9,8 +9,9 @@ require __DIR__.'/../vendor/autoload.php';//Autoload de composer
 //CONECTAR A LA BD
 $db = conectarDB();
 
-use App\Propiedad;
+use App\ActiveRecord;
 
-Propiedad::setDB($db);//todos los objetos creados de Propiedad tienen la referencia a la BD
+//ACTIVE RECORD ES LA CLASE PADRE, HEREDARÁ A TODAS LAS CLASES HIJAS LA CONEXION A LA BD
+ActiveRecord::setDB($db);
 
 

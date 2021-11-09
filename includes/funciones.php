@@ -27,3 +27,37 @@ function s($html) : string{
     $s = htmlspecialchars($html);//sanitiza el HTML
     return $s;
 }
+
+
+//VALIDAR TIPO DE CONTENIDO PARA ELIMINAR PROPIEDADES O VENDEDORES
+function validarTipoContenido($tipo){
+    $tipos = ['vendedor', 'propiedad'];
+
+    return in_array($tipo, $tipos);
+
+    //in_array() - BUSCA UN ELEMENTO EN UN ARREGLO
+    //in_array($que busca, $donde lo busca)
+}
+
+
+//MENSAJES PARA EL CRUD
+function mostrarNotificacion($codigo){
+    $mensaje = '';
+
+    switch ($codigo) {
+        case 1:
+            $mensaje = 'Registrado correctamente';
+            break;
+        case 2:
+            $mensaje = 'Actualizado correctamente';
+            break;
+        case 3:
+            $mensaje = 'Eliminado correctamente';
+            break;
+        default:
+            # code...
+            break;
+    }
+
+    return $mensaje;
+}

@@ -4,18 +4,15 @@
 require '../../includes/app.php';
 
 use App\Propiedad;
+use App\Vendedor;
 use Intervention\Image\ImageManagerStatic as Image;
 
 estaAutenticado();
 
-//Conexión a la BD
-$db = conectarDB();
-
 $propiedad = new Propiedad;
 
 //CONSULTAR TODOS LOS VENDEDORES
-$consulta = "SELECT * FROM vendedores;";
-$resultado = mysqli_query($db, $consulta);
+$vendedores = Vendedor::all();
 
 //ARREGLO DE MENSAJES DE ERRORES
 $errores = Propiedad::getErrores();
@@ -54,12 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $image->save(CARPETA_IMAGENES.$nombreImagen);
 
         //GUARDAR OBJETO EN LA BD
-        $resultado = $propiedad->guardar();
-
-        if ($resultado) {
-            //REDIRECCIONAR AL USER
-            header('Location: /admin?resultado=1');
-        }    
+        $propiedad->guardar();  
     }
     
 }
